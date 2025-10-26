@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Benchmark Result</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background: #f3f5f7;
+            margin: 0;
+            padding: 30px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+        .result {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+        .highlight {
+            color: #0078D7;
+            font-weight: bold;
+        }
+        canvas {
+            margin-top: 20px;
+            width: 100%;
+            height: 300px;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 25px;
+            text-decoration: none;
+            background: #0078D7;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+        }
+        .back-btn:hover {
+            background: #005fa3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Performance Comparison Result</h2>
+
+    <div class="result"><b>Normal Java Time:</b> <span id="normal" class="highlight"></span></div>
+    <div class="result"><b>Spring Boot Time:</b> <span id="spring" class="highlight"></span></div>
+    <div class="result"><b>Improvement:</b> <span id="improvement" class="highlight"></span></div>
+    <div class="result"><b>Message:</b> <span id="message" class="highlight"></span></div>
+
+    <canvas id="chart"></canvas>
+
+    <a href="/" class="back-btn">← Go Back</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const normal = parseFloat(params.get('normalTime')) || 0;
+    const spring = parseFloat(params.get('springBootTime')) || 0;
+    const improvement = parseFloat(params.get('improvement')) || 0;
+    const message = params.get('message') || 'No message';
+
+    document.getElementById('normal').textContent = normal + ' ms';
+    document.getElementById('spring').textContent = spring + ' ms';
+    document.getElementById('improvement').textContent = improvement.toFixed(2) + '%';
+    document.getElementById('message').textContent = message;
+
+    new Chart(document.getElementById('chart'), {
+        type: 'bar',
+        data: {
+            labels: ['Normal Java', 'Spring Boot'],
+            datasets: [{
+                label: 'Execution Time (ms)',
+                data: [normal, spring],
+                backgroundColor: ['#ff7b00', '#0078D7']
+            }]
+        },
+        options: { scales: { y: { beginAtZero: true } } }
+    });
+</script>
+</body>
+</html>

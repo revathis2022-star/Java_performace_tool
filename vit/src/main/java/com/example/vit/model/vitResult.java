@@ -1,49 +1,40 @@
-package com.example.vit.service;
+package com.example.vit.model;
 
-import com.example.vit.model.vitResult;
-import org.springframework.stereotype.Service;
+public class vitResult {
+    private long normalTime;
+    private long springBootTime;
+    private double improvement;
+    private String message;
 
-import java.io.File;
-import java.io.IOException;
-
-@Service
-public class vitService {
-
-    public vitResult analyzeFiles(File normalFile, File springFile) {
-        vitResult result = new vitResult();
-
-        try {
-            // Simulate running or analyzing both Java files
-            long normalStart = System.currentTimeMillis();
-            simulateExecution(normalFile);
-            long normalEnd = System.currentTimeMillis();
-
-            long springStart = System.currentTimeMillis();
-            simulateExecution(springFile);
-            long springEnd = System.currentTimeMillis();
-
-            long normalTime = normalEnd - normalStart;
-            long springTime = springEnd - springStart;
-
-            // Calculate improvement percentage
-            double improvement = ((double) (normalTime - springTime) / normalTime) * 100;
-
-            result.setNormalTime(normalTime);
-            result.setSpringBootTime(springTime);
-            result.setImprovement(improvement);
-            result.setMessage("Files analyzed successfully!");
-
-        } catch (Exception e) {
-            result.setMessage("Error analyzing files: " + e.getMessage());
-        }
-
-        return result;
+    public long getNormalTime() {
+        return normalTime;
     }
 
-    // Dummy function to simulate file processing delay
-    private void simulateExecution(File file) throws IOException, InterruptedException {
-        long size = file.length();
-        long delay = Math.min(size / 10, 3000); // limit delay to 3 seconds max
-        Thread.sleep(delay);
+    public void setNormalTime(long normalTime) {
+        this.normalTime = normalTime;
+    }
+
+    public long getSpringBootTime() {
+        return springBootTime;
+    }
+
+    public void setSpringBootTime(long springBootTime) {
+        this.springBootTime = springBootTime;
+    }
+
+    public double getImprovement() {
+        return improvement;
+    }
+
+    public void setImprovement(double improvement) {
+        this.improvement = improvement;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
